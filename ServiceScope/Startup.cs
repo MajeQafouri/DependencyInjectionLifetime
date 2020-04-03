@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using ServiceScope.Models;
 using ServiceScope.Services;
+using ServiceScope.Services.Factories;
 
 namespace ServiceScope
 {
@@ -34,6 +35,18 @@ namespace ServiceScope
             services.AddSingleton<ISingletonService, SingletonService>();
             services.AddScoped<IScopeService, ScopeService>();
             services.AddTransient<ITransientService, TransientService>();
+
+            #region For Examination
+
+            {
+                services.AddHttpContextAccessor();
+
+                services.AddSingleton<IExaminationSingletonService, ExaminationSingletonService>();
+                services.AddSingleton<ITransientServiceFactory, TransientServiceFactory>();
+                services.AddSingleton<IScopeServiceFactory, ScopeServiceFactory>();
+            }
+
+            #endregion
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
